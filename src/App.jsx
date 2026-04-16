@@ -1,46 +1,46 @@
-const highlights = [
-  "Single-page React app scaffolded for GitHub Pages",
-  "Vite-powered development and production builds",
-  "One-command deploy flow with the gh-pages package",
+import { useState } from "react";
+import page1 from "../artifacts/1.svg?url";
+import page2 from "../artifacts/2.svg?url";
+import page3 from "../artifacts/3.svg?url";
+import page4 from "../artifacts/4.svg?url";
+import page5 from "../artifacts/5.svg?url";
+
+const pages = [
+  { label: "Page 1", src: page1 },
+  { label: "Page 2", src: page2 },
+  { label: "Page 3", src: page3 },
+  { label: "Page 4", src: page4 },
+  { label: "Page 5", src: page5 },
 ];
 
 export default function App() {
+  const [current, setCurrent] = useState(0);
+
   return (
-    <main className="page-shell">
-      <section className="hero">
-        <p className="eyebrow">React + GitHub Pages</p>
-        <h1>Sugar Gliders</h1>
-        <p className="lede">
-          A clean single-page starter that is ready for you to shape into the
-          site you actually want to launch.
-        </p>
-        <div className="actions">
-          <a className="button button-primary" href="#next-steps">
-            View setup steps
-          </a>
-          <a className="button button-secondary" href="https://pages.github.com/">
-            GitHub Pages docs
-          </a>
-        </div>
-      </section>
+    <div className="app">
+      <nav className="nav">
+        <ul className="nav-list">
+          {pages.map((page, i) => (
+            <li key={page.label}>
+              <button
+                className={`nav-item${current === i ? " nav-item--active" : ""}`}
+                onClick={() => setCurrent(i)}
+              >
+                {page.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
-      <section className="card-grid" aria-label="Starter highlights">
-        {highlights.map((item) => (
-          <article className="card" key={item}>
-            <span className="card-accent" />
-            <p>{item}</p>
-          </article>
-        ))}
-      </section>
-
-      <section className="steps" id="next-steps">
-        <h2>Next steps</h2>
-        <ol>
-          <li>Customize the content in <code>src/App.jsx</code>.</li>
-          <li>Run <code>npm run dev</code> to work locally.</li>
-          <li>Run <code>npm run deploy</code> after you create the GitHub repo.</li>
-        </ol>
-      </section>
-    </main>
+      <main className="page-view">
+        <img
+          key={current}
+          src={pages[current].src}
+          alt={pages[current].label}
+          className="page-svg"
+        />
+      </main>
+    </div>
   );
 }
